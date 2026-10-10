@@ -1,0 +1,20 @@
+# Dépendances
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+lumina-*.log
+
+# Environnement / secrets
+.env
+.env.local
+.env.production
+
+# Système
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

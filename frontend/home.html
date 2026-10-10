@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>LUMINA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" type="image/jpg" href="LUMINAICON-removebg-preview-modified.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+/* =============================================
+   LUMINA - Home Page : Design moderne & élégant
+   ============================================= */
+:root {
+  --primary-color: #8B5A2B;
+  --primary-dark: #6b4420;
+  --secondary-color: #F1E9DD;
+  --dark-brown: #3E2E25;
+  --light-beige: #FAF6F0;
+  --accent-color: #D4A26A;
+  --text-color: #4a3f37;
+  --text-muted: #7c7166;
+  --white: #FFFFFF;
+  --navbar-height: 120px;
+  --shadow-sm: 0 4px 14px rgba(62, 46, 37, 0.06);
+  --shadow-md: 0 12px 32px rgba(62, 46, 37, 0.10);
+  --shadow-lg: 0 24px 60px rgba(62, 46, 37, 0.16);
+  --gradient-brand: linear-gradient(135deg, #9c6b37 0%, #8B5A2B 50%, #6f4a26 100%);
+  --gradient-gold: linear-gradient(135deg, #E3C08A 0%, #D4A26A 50%, #b07f43 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  background-color: var(--white);
+  color: var(--text-color);
+  overflow-x: hidden;
+  padding-top: var(--navbar-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Playfair Display', serif;
+  color: var(--dark-brown);
+}
+
+::selection {
+  background: rgba(139, 90, 43, 0.2);
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--light-beige); }
+::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 999px; border: 2px solid var(--light-beige); }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
+
+/* ============ NAVBAR ============ */
+.navbar {
+  height: var(--navbar-height);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(62, 46, 37, 0.06);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar::after {
+  content: '';
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color) 30%, var(--primary-color) 70%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.navbar.scrolled {
+  height: 96px;
+  padding: 0 4%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-md);
+  border-bottom-color: rgba(62, 46, 37, 0.10);
+}
+
+.navbar.scrolled::after {
+  opacity: 1;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.logo img {
+  max-height: 90%;
+  max-width: 260px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(62, 46, 37, 0.10));
+  transition: all 0.4s ease;
+}
+
+.navbar.scrolled .logo img {
+  max-height: 76%;
+}
+
+.menu-btn {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 38px;
+  height: 26px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  z-index: 1010;
+}
+
+.menu-btn span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  border-radius: 3px;
+  background-color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.menu-btn.active span:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+
+.menu-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) {
+  transform: translateY(-12px) rotate(-45deg);
+}
+
+/* ============ SIDEBAR ============ */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 350px;
+  height: 100%;
+  background-color: var(--white);
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.10);
+  z-index: 1000;
+  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 100px 30px 30px;
+  overflow-y: auto;
+}
+
+.sidebar.active {
+  right: 0;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 20, 14, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 12px;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: all 0.4s ease;
+}
+
+.sidebar.active .sidebar-nav li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sidebar.active .sidebar-nav li:nth-child(1) { transition-delay: 0.1s; }
+.sidebar.active .sidebar-nav li:nth-child(2) { transition-delay: 0.2s; }
+.sidebar.active .sidebar-nav li:nth-child(3) { transition-delay: 0.3s; }
+.sidebar.active .sidebar-nav li:nth-child(4) { transition-delay: 0.4s; }
+.sidebar.active .sidebar-nav li:nth-child(5) { transition-delay: 0.5s; }
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--dark-brown);
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 14px 20px;
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+  color: var(--white);
+  background: var(--gradient-brand);
+  transform: translateX(4px);
+  box-shadow: 0 10px 24px rgba(139, 90, 43, 0.3);
+}
+
+/* ============ HERO SECTION ============ */
+.hero-section {
+  min-height: 68vh;
+  background-image: url(hsec2.jpeg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 90px 0;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(115deg, rgba(35, 22, 14, 0.82) 0%, rgba(35, 22, 14, 0.45) 45%, rgba(35, 22, 14, 0.18) 75%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  padding: 48px;
+  border-radius: 28px;
+  max-width: 720px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 24px 60px rgba(17, 10, 6, 0.35);
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s;
+}
+
+.hero-content.loaded {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(212, 162, 106, 0.16);
+  border: 1px solid rgba(212, 162, 106, 0.45);
+  color: #F3DCB8;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(6px);
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  line-height: 1.15;
+  color: var(--white);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hero-title i {
+  font-style: italic;
+  background: linear-gradient(90deg, #F0D7AE, #D4A26A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2.2rem;
+  opacity: 0.95;
+  max-width: 560px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.btn-primary-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gradient-gold);
+  color: #3a2b1e;
+  padding: 15px 38px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  border: none;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(212, 162, 106, 0.4);
+  cursor: pointer;
+}
+
+.btn-primary-custom:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(212, 162, 106, 0.5);
+  color: #2c2015;
+  filter: brightness(1.06);
+}
+
+.hero-decoration {
+  position: absolute;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.decoration-1 {
+  top: -50px;
+  right: -50px;
+  width: 300px;
+  transform: rotate(45deg);
+  transition-delay: 0.5s;
+}
+
+.decoration-2 {
+  bottom: -100px;
+  left: -100px;
+  width: 400px;
+  transition-delay: 0.7s;
+}
+
+.hero-section.loaded .decoration-1,
+.hero-section.loaded .decoration-2 {
+  opacity: 0.12;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 30px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  padding-top: 9px;
+}
+
+.scroll-indicator::after {
+  content: '';
+  width: 5px;
+  height: 10px;
+  border-radius: 4px;
+  background: #fff;
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ============ PRODUCTS SECTION ============ */
+.products-section {
+  padding: 100px 0;
+  background-color: var(--white);
+}
+
+.products-title {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  text-align: center;
+  margin-bottom: 16px;
+  color: var(--dark-brown);
+}
+
+.products-title::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--gradient-gold);
+  margin: 20px auto 0;
+}
+
+.product-card {
+  border: 1px solid rgba(62, 46, 37, 0.05);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-sm);
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-lg);
+}
+
+.product-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.06);
+}
+
+.product-body {
+  padding: 28px 24px 26px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #ffffff 0%, #FBFAF7 100%);
+}
+
+.product-title {
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+  color: var(--dark-brown);
+}
+
+.view-more-btn {
+  background: var(--gradient-brand);
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(139, 90, 43, 0.25);
+  transition: all 0.3s ease;
+}
+
+.view-more-btn:hover {
+  background: var(--gradient-brand);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(139, 90, 43, 0.38);
+  text-decoration: none;
+  filter: brightness(1.06);
+}
+
+/* ============ BOUQUET SECTION ============ */
+.bouquet-section {
+  padding: 110px 0;
+  background: linear-gradient(180deg, var(--light-beige), #ffffff 70%);
+  position: relative;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  text-align: center;
+  margin-bottom: 60px;
+  color: var(--dark-brown);
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--gradient-gold);
+  margin: 20px auto 0;
+}
+
+.bouquet-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+}
+
+.bouquet-card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 40px 28px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(139, 90, 43, 0.08);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.bouquet-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-gold);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.bouquet-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-lg);
+}
+
+.bouquet-card:hover::before {
+  opacity: 1;
+}
+
+.bouquet-icon {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  color: #fff;
+  background: var(--gradient-brand);
+  border-radius: 28px;
+  box-shadow: 0 14px 30px rgba(139, 90, 43, 0.30);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bouquet-card:hover .bouquet-icon {
+  transform: translateY(-6px) rotate(-4deg) scale(1.06);
+}
+
+.bouquet-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 14px;
+  color: var(--primary-color);
+}
+
+.bouquet-card p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+.bouquet-image-container {
+  max-width: 540px;
+  position: relative;
+  margin: 70px auto;
+}
+
+.bouquet-main-image {
+  width: 100%;
+  height: auto;
+  border-radius: 32px;
+  box-shadow: var(--shadow-lg);
+  display: block;
+}
+
+.bouquet-image-decoration {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border: 2px dashed var(--accent-color);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.decoration-top {
+  top: -30px;
+  right: -30px;
+}
+
+.decoration-bottom {
+  bottom: -30px;
+  left: -30px;
+}
+
+/* ============ ARTIST SECTION ============ */
+.artist-section {
+  padding: 110px 0;
+  background-color: var(--secondary-color);
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.artist-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 60px;
+}
+
+.artist-image {
+  flex: 1;
+  min-width: 300px;
+  position: relative;
+  text-align: center;
+}
+
+.artist-image::before {
+  content: '';
+  position: absolute;
+  inset: -16px 70px 14px -16px;
+  border: 2px solid var(--accent-color);
+  border-radius: 44px;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.artist-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 40px;
+  box-shadow: var(--shadow-lg);
+}
+
+.artist-signature {
+  position: absolute;
+  top: -28px;
+  right: 40px;
+  z-index: 2;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.9rem;
+  color: var(--primary-color);
+  background: var(--white);
+  padding: 6px 26px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-md);
+  transform: rotate(4deg);
+}
+
+.artist-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.artist-title {
+  font-size: 2.3rem;
+  margin-bottom: 1.4rem;
+  color: var(--primary-color);
+  font-style: italic;
+}
+
+.artist-description {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--dark-brown);
+  margin-bottom: 2rem;
+  max-width: 560px;
+}
+
+.button-outline-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.button-outline-brand:hover {
+  background: var(--gradient-brand);
+  border-color: var(--primary-color);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(139, 90, 43, 0.35);
+}
+
+/* ============ TESTIMONIALS SECTION ============ */
+.testimonials-section {
+  padding: 90px 0;
+  background-color: var(--white);
+  overflow: hidden;
+  position: relative;
+}
+
+.testimonials-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--dark-brown);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.testimonials-title::after {
+  content: '';
+  display: block;
+  width: 90px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--gradient-gold);
+  margin: 20px auto 0;
+}
+
+.testimonial-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  padding: 60px 60px 0;
+}
+
+.testimonial-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.testimonial-slider {
+  display: flex;
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+.testimonial-card {
+  flex: 0 0 auto;
+  width: 380px;
+  background: #FBFAF8;
+  border-radius: 24px;
+  padding: 36px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(139, 90, 43, 0.08);
+  margin: 0 20px;
+  opacity: 0.55;
+  transform: scale(0.95);
+  transition: all 0.45s ease;
+}
+
+.testimonial-card.active {
+  opacity: 1;
+  transform: scale(1);
+  background: white;
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(212, 162, 106, 0.35);
+}
+
+.testimonial-quote {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #fff;
+  background: var(--gradient-gold);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(212, 162, 106, 0.4);
+}
+
+.testimonial-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+  color: var(--dark-brown);
+}
+
+.testimonial-text {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--text-color);
+  margin-bottom: 22px;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+  gap: 14px;
+}
+
+.testimonial-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-color);
+}
+
+.testimonial-name {
+  font-weight: 700;
+  color: var(--dark-brown);
+  font-size: 0.98rem;
+}
+
+.testimonial-role {
+  color: var(--primary-color);
+  font-size: 0.85rem;
+}
+
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(139, 90, 43, 0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md);
+}
+
+.custom-arrow:hover {
+  background: var(--gradient-brand);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 10px 26px rgba(139, 90, 43, 0.35);
+}
+
+.custom-arrow:active {
+  transform: translateY(-50%) scale(0.97);
+}
+
+.carousel-control-prev { left: 0; }
+.carousel-control-next { right: 0; }
+
+/* ============ FOOTER ============ */
+.footer {
+  background: linear-gradient(180deg, #33251C 0%, #241A13 100%);
+  color: #E9DFD2;
+  padding: 70px 0 30px;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-gold);
+}
+
+.footer h5 {
+  color: #F3DCB8;
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #C9B8A5;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+  padding-left: 6px;
+}
+
+.contact-info {
+  margin-bottom: 20px;
+}
+
+.contact-info i {
+  margin-right: 10px;
+  color: var(--accent-color);
+}
+
+.footer .input-group .form-control {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-radius: 999px 0 0 999px;
+  padding: 10px 18px;
+}
+
+.footer .form-control::placeholder { color: #A99A88; }
+
+.footer .form-control:focus {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.25rem rgba(212, 162, 106, 0.2);
+}
+
+.footer .input-group .btn {
+  border-radius: 0 999px 999px 0;
+  padding: 10px 18px;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  border-radius: 14px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background: var(--gradient-gold);
+  color: #3a2b1e;
+  transform: translateY(-6px);
+}
+
+.copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+  margin-top: 46px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #B8A593;
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.animate {
+  opacity: 0;
+  animation: fadeInUp 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+.delay-4 { animation-delay: 0.6s; }
+.delay-5 { animation-delay: 0.75s; }
+
+/* ============ MEDIA QUERIES ============ */
+@media (max-width: 991.98px) {
+  :root { --navbar-height: 110px; }
+
+  .navbar.scrolled { height: 90px; }
+
+  .sidebar { width: 320px; right: -320px; }
+
+  .hero-section {
+    text-align: center;
+    min-height: 92vh;
+    background-attachment: scroll;
+    padding: 60px 0;
+  }
+
+  .hero-content { padding: 36px 28px; max-width: 94%; }
+
+  .hero-title { font-size: 3rem; }
+
+  .hero-subtitle { font-size: 1.2rem; margin-left: auto; margin-right: auto; max-width: 100%; }
+
+  .btn-primary-custom { padding: 13px 32px; font-size: 0.9rem; }
+
+  .section-title, .products-title, .testimonials-title { font-size: 2.1rem; }
+
+  .bouquet-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+  .artist-content { flex-direction: column; text-align: center; }
+
+  .artist-description { margin: 0 auto 2rem; }
+
+  .artist-image::before { inset: -12px 14px -12px 14px; z-index: 0; }
+
+  .artist-signature { position: static; display: inline-flex; margin-bottom: 26px; transform: none; }
+
+  .testimonial-container { padding: 40px 50px 0; }
+
+  .testimonial-card { width: 340px; margin: 0 15px; padding: 28px; }
+
+  .product-img { aspect-ratio: 1/1; }
+
+  .scroll-indicator { display: none; }
+}
+
+@media (max-width: 767.98px) {
+  :root { --navbar-height: 100px; }
+
+  .navbar.scrolled { height: 84px; }
+
+  .navbar { padding: 0 4%; }
+
+  .sidebar { width: 280px; right: -280px; }
+
+  .hero-section { min-height: 86vh; background-attachment: scroll; padding: 50px 0; }
+
+  .hero-title { font-size: 2.5rem; }
+
+  .hero-subtitle { font-size: 1.1rem; }
+
+  .section-title, .products-title, .testimonials-title { font-size: 1.9rem; }
+
+  .bouquet-section, .products-section, .artist-section, .testimonials-section { padding: 70px 0; }
+
+  .bouquet-grid { grid-template-columns: 1fr; gap: 30px; }
+
+  .bouquet-card { max-width: 480px; margin: 0 auto; }
+
+  .testimonial-container { padding: 40px 30px 0; }
+
+  .testimonial-card { width: 78vw; max-width: 78vw; margin: 0; padding: 24px; }
+
+  .custom-arrow { width: 44px; height: 44px; }
+
+  .carousel-control-prev { left: -8px; }
+  .carousel-control-next { right: -8px; }
+
+  .product-img { aspect-ratio: 4/5; }
+
+  .products-section .row { gap: 40px; }
+
+  .product-card { margin-bottom: 40px; }
+}
+
+@media (max-width: 575.98px) {
+  :root { --navbar-height: 92px; }
+
+  .navbar.scrolled { height: 78px; }
+
+  .navbar { padding: 0 4%; }
+
+  .navbar-brand { width: 55%; min-width: 150px; max-width: 190px; }
+
+  .logo img { max-height: 80%; }
+
+  .sidebar { width: 260px; right: -260px; }
+
+  .menu-btn { width: 34px; height: 24px; }
+
+  .hero-section { min-height: 80vh; padding: 40px 0; }
+
+  .hero-content { padding: 26px 20px; }
+
+  .hero-title { font-size: 2rem; }
+
+  .hero-subtitle { font-size: 1rem; }
+
+  .btn-primary-custom { padding: 12px 28px; font-size: 0.82rem; }
+
+  .section-title, .products-title, .testimonials-title { font-size: 1.7rem; }
+
+  .bouquet-section, .products-section, .artist-section, .testimonials-section { padding: 55px 0; }
+
+  .bouquet-icon { width: 68px; height: 68px; border-radius: 20px; font-size: 1.5rem; }
+
+  .bouquet-card { padding: 26px 18px; }
+
+  .artist-img { max-width: 240px; }
+
+  .artist-title { font-size: 1.8rem; }
+
+  .artist-description { font-size: 0.95rem; }
+
+  .testimonial-container { padding: 30px 20px 0; }
+
+  .testimonial-card { padding: 20px; }
+
+  .custom-arrow { width: 38px; height: 38px; }
+
+  .footer { padding: 55px 0 24px; }
+
+  .footer h5 { font-size: 1rem; }
+
+  .social-links a { width: 38px; height: 38px; }
+
+  .products-section .row { gap: 30px; }
+
+  .product-card { margin-bottom: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <a class="navbar-brand logo" href="home.html">
+    <img src="LOGO (2).png" alt="Logo LUMINA">
+  </a>
+  <button class="menu-btn" id="menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <ul class="sidebar-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/small">Taille Small</a></li>
+      <li><a href="/medium">Taille Medium</a></li>
+      <li><a href="/Large">Taille Large</a></li>
+      <li><a href="#footer">Contact Us</a></li>     
+
+    </ul>
+  </nav>
+</aside>
+
+<!-- Hero Section -->
+<section class="hero-section" id="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 hero-content">
+        <div class="hero-badge"><i class="fas fa-candle-holder"></i> Cire naturelle · Fait main</div>
+        <h1 class="hero-title animate delay-1">LUMINA <i>BY BOUTAINA</i></h1>
+        <p class="hero-subtitle animate delay-2">Des bougies artisanales uniques, créées avec passion pour illuminer vos moments spéciaux. Chaque pièce est une œuvre d'art qui raconte une histoire.</p>
+        <a href="#nos-bougis" class="btn btn-primary-custom animate delay-3">Découvrir nos créations <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="scroll-indicator"></div>
+  
+  <img src="https://cdn.pixabay.com/photo/2017/01/31/23/42/decorative-2028039_1280.png" alt="Décoration florale" class="hero-decoration decoration-1">
+  <img src="https://cdn.pixabay.com/photo/2017/01/31/23/42/decorative-2028039_1280.png" alt="Décoration florale" class="hero-decoration decoration-2">
+</section>
+<section class="products-section" id="nos-bougis">
+  <div class="container">
+    <h2 class="products-title">Nos Bougies</h2>
+    <div class="row">
+      <!-- Bougie 1 -->
+      <div class="col-md-4">
+        <div class="product-card animate delay-1">
+          <img src="small4.jpg" class="product-img" alt="Bougie Small">
+          <div class="product-body">
+            <h3 class="product-title">Bouquet Small</h3>
+           <a href="small.html" > <button class="btn view-more-btn" style="text-decoration: none;">voir plus</button></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouquet 2 -->
+      <div class="col-md-4">
+        <div class="product-card animate delay-2">
+          <img src="medium4.jpg" class="product-img" alt="Bouquet Medium">
+          <div class="product-body">
+            <h3 class="product-title">Bouquet Medium</h3>
+           <a href="medium.html" > <button class="btn view-more-btn" style="text-decoration: none;">voir plus</button></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouquet 3 -->
+      <div class="col-md-4">
+        <div class="product-card animate delay-3">
+          <img src="l5.JPG" class="product-img" alt="Bouquet Large">
+          <div class="product-body">
+            <h3 class="product-title">Bouquet Large</h3>
+           <a href="Large.html" > <button class="btn view-more-btn" style="text-decoration: none;">voir plus</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Bouquet Section - Réorganisée avec 4+4 cartes -->
+<section class="bouquet-section" id="bouquet-signature">
+  <div class="container">
+    <h2 class="section-title animate">Nos Bouquets Signature</h2>
+    
+    <!-- Première rangée de 4 cartes -->
+    <div class="bouquet-grid">
+      <div class="bouquet-card animate delay-1">
+        <div class="bouquet-icon">
+          <i class="fas fa-birthday-cake"></i>
+        </div>
+        <h3>Anniversaire</h3>
+        <p>Un bouquet dédié pour célébrer des souvenirs inoubliables. Offrez une étincelle de magie pour un jour unique.</p>
+      </div>
+      
+      <div class="bouquet-card animate delay-2">
+        <div class="bouquet-icon">
+          <i class="fas fa-glass-cheers"></i>
+        </div>
+        <h3>Fin D'année</h3>
+        <p>Rayonnez avec un cadeau aussi brillant que vos souvenirs. Un présent qui illumine vos moments précieux.</p>
+      </div>
+      
+      <div class="bouquet-card animate delay-3">
+        <div class="bouquet-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h3>Mariage</h3>
+        <p>Un cadeau qui brille aussi fort que leur amour. Un souvenir éternel pour une journée mémorable.</p>
+      </div>
+      
+      <div class="bouquet-card animate delay-4">
+        <div class="bouquet-icon">
+          <i class="fas fa-gem"></i>
+        </div>
+        <h3>Fiançailles</h3>
+        <p>Symbolisez votre amour avec un cadeau lumineux pour marquer le début de votre vie à deux.</p>
+      </div>
+    </div>
+    
+    <!-- Image centrale -->
+    <div class="bouquet-image-container animate delay-3">
+      <img src="nv.jpeg" alt="Bouquet Lumina" class="bouquet-main-image">
+      <div class="bouquet-image-decoration decoration-top"></div>
+      <div class="bouquet-image-decoration decoration-bottom"></div>
+    </div>
+    
+    <!-- Deuxième rangée de 4 cartes -->
+    <div class="bouquet-grid">
+      <div class="bouquet-card animate delay-5">
+        <div class="bouquet-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3>Graduation</h3>
+        <p>Honorez chaque nouvelle étape avec une lumière qui ne s'éteint jamais.</p>
+      </div>
+      
+      <div class="bouquet-card animate delay-1">
+        <div class="bouquet-icon">
+          <i class="fas fa-baby"></i>
+        </div>
+        <h3>Naissance</h3>
+        <p>Un cadeau lumineux pour accueillir une nouvelle vie et célébrer ce moment magique.</p>
+      </div>
+      
+      <div class="bouquet-card animate delay-2">
+        <div class="bouquet-icon">
+          <i class="fas fa-home"></i>
+        </div>
+        <h3>Maison</h3>
+        <p>Illuminez votre intérieur avec une ambiance chaleureuse et apaisante.</p>
+      </div>
+      
+      <div class="bouquet-card animate delay-3">
+        <div class="bouquet-icon">
+          <i class="fas fa-spa"></i>
+        </div>
+        <h3>Détente</h3>
+        <p>Créez une atmosphère zen avec nos bougies aux parfums relaxants.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Produits Section -->
+
+
+<!-- Artist Section -->
+<section class="artist-section">
+  <div class="container">
+    <div class="artist-content">
+      <div class="artist-image animate delay-1">
+        <img src="BUTAINA-removebg-preview.png" alt="Artiste Lumina" class="artist-img">
+        <div class="artist-signature">Lumina</div>
+      </div>
+      <div class="artist-text animate delay-2">
+        <h2 class="artist-title">Art and Artist</h2>
+        <p class="artist-description">
+          After my studies, I felt the need to create something that truly reflects who I am — a business that combines my passion with a way to make a living. This is how I built a venture that brings my artistic vision to life. Each candle is carefully crafted with natural ingredients and infused with creativity to bring light and warmth to your special moments.
+          Lumina represents more than just candles; it's a celebration of art, craftsmanship, and the beauty of light. Every piece tells a story and carries a part of my journey as an artist and entrepreneur.
+        </p>
+        <a href="#footer" class="button-outline-brand"><i class="fas fa-heart"></i> Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Témoignages - VERSION CORRIGÉE -->
+<section class="testimonials-section" id="temoignage">
+  <div class="container">
+    <h2 class="testimonials-title">Client Feedback</h2>
+    
+    <div class="testimonial-container">
+      <div class="testimonial-wrapper">
+        <div class="testimonial-slider" id="testimonial-slider">
+          <!-- Témoignage 1 -->
+          <div class="testimonial-card active">
+            <div class="testimonial-quote">❝</div>
+            <h5 class="testimonial-title">Lumina is the best</h5>
+            <p class="testimonial-text">J'ai offert un bouquet de bougies pour l'anniversaire de ma meilleure amie. Elle a adoré !</p>
+            <div class="testimonial-author">
+              <img src="tem1.jpg" class="testimonial-avatar" alt="Hamza">
+              <div>
+                <div class="testimonial-name">Hamza Idrissi <span class="testimonial-role">/Client</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Témoignage 2 -->
+          <div class="testimonial-card">
+            <div class="testimonial-quote">❝</div>
+            <h5 class="testimonial-title">Lovely Gift</h5>
+            <p class="testimonial-text">Mon mari m'a offert un bouquet magnifique. C'est devenu notre symbole d'amour.</p>
+            <div class="testimonial-author">
+              <img src="tem2.JPG" class="testimonial-avatar" alt="Aya">
+              <div>
+                <div class="testimonial-name">Aya Elouafi <span class="testimonial-role">/Client</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Témoignage 3 -->
+          <div class="testimonial-card">
+            <div class="testimonial-quote">❝</div>
+            <h5 class="testimonial-title">Very Professional</h5>
+            <p class="testimonial-text">J'ai choisi un bouquet de bougies pour un diplôme. Beau et symbolique !</p>
+            <div class="testimonial-author">
+              <img src="tem3.JPG" class="testimonial-avatar" alt="Lamyaa">
+              <div>
+                <div class="testimonial-name">Lamyaa Nachit <span class="testimonial-role">/Client</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Témoignage 4 -->
+          <div class="testimonial-card">
+            <div class="testimonial-quote">❝</div>
+            <h5 class="testimonial-title">Quality Product</h5>
+            <p class="testimonial-text">Les bougies sont magnifiques et sentent très bon. Merci Lumina !</p>
+            <div class="testimonial-author">
+              <img src="tem4.JPG" class="testimonial-avatar" alt="Safouane">
+              <div>
+                <div class="testimonial-name">Safouane Ahmadi <span class="testimonial-role">/Client</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Témoignage 5 -->
+          <div class="testimonial-card">
+            <div class="testimonial-quote">❝</div>
+            <h5 class="testimonial-title">Satisfaction Client</h5>
+            <p class="testimonial-text">Je commande régulièrement et je suis toujours satisfaite !</p>
+            <div class="testimonial-author">
+              <img src="tem5.JPG" class="testimonial-avatar" alt="Aya">
+              <div>
+                <div class="testimonial-name">Aya Derkaoui <span class="testimonial-role">/Client</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flèches de navigation - Positionnées à l'extérieur du conteneur -->
+      <button class="custom-arrow carousel-control-prev" id="prev-testimonial">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="custom-arrow carousel-control-next" id="next-testimonial">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mb-4">
+        <h5>Lumina</h5>
+        <p style="color: var(--secondary-color);">L'art de la lumière. Des bougies artisanales uniques, créées avec passion pour illuminer vos moments spéciaux.</p>
+        <div class="social-links mt-80">
+          <a href="https://www.facebook.com/profile.php?id=61570891946560&mibextid=wwXIfr&rdid=S4i8gSNXTu2VD8pn&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CrBXNhpkD%2F%3Fmibextid%3DwwXIfr#" style="padding-bottom: 5px;"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/lumina.by.boutaina/"  style="padding-bottom: 5px;"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@lumina.by.boutaina"  style="padding-bottom: 5px;"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h5>Navigation</h5>
+        <ul class="footer-links">
+          <li><a href="#">Accueil</a></li>
+          <li><a href="#">Nos Bougies</a></li>
+          <li><a href="#">Bouquets</a></li>
+          <li><a href="#">À Propos</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h5>Contact Us</h5>
+        <div class="contact-info">
+          <p><i class="fas fa-phone"></i> +212 6 03 27 03 00</p>
+          <p><i class="fas fa-envelope"></i>Lumina.bougie@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h5>Newsletter</h5>
+        <p style="color: var(--secondary-color);">Abonnez-vous pour recevoir nos offres spéciales</p>
+        <form class="mt-3">
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Votre email" aria-label="Votre email">
+            <button class="btn btn-primary" type="submit" style="background-color: var(--accent-color); border-color: var(--accent-color);">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <p>&copy; 2025 Lumina. Tous droits réservés. Fait avec ❤️ au Maroc</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Animation au chargement de la page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Animation du contenu hero avec image
+    const heroSection = document.getElementById('hero-section');
+    const heroContent = document.querySelector('.hero-content');
+    
+    setTimeout(() => {
+      heroContent.classList.add('loaded');
+      heroSection.classList.add('loaded');
+    }, 300);
+
+    // Initialisation du carrousel de témoignages
+    initTestimonialCarousel();
+  });
+
+  // Animation au scroll
+  window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    
+    // Animation des éléments
+    const elements = document.querySelectorAll('.animate');
+    elements.forEach(element => {
+      const elementPosition = element.getBoundingClientRect().top;
+      const screenPosition = window.innerHeight / 1.2;
+      
+      if(elementPosition < screenPosition) {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }
+    });
+  });
+
+  // Activer les animations au chargement
+  window.addEventListener('load', function() {
+    const elements = document.querySelectorAll('.animate');
+    elements.forEach(element => {
+      element.style.opacity = '1';
+      element.style.transform = 'translateY(0)';
+    });
+  });
+
+  // Gestion du menu hamburger et sidebar
+  const menuBtn = document.getElementById('menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+  
+  menuBtn.addEventListener('click', function() {
+    this.classList.toggle('active');
+    sidebar.classList.toggle('active');
+    sidebarOverlay.classList.toggle('active');
+  });
+  
+  sidebarOverlay.addEventListener('click', function() {
+    menuBtn.classList.remove('active');
+    sidebar.classList.remove('active');
+    this.classList.remove('active');
+  });
+
+  // Fonction pour initialiser le carrousel de témoignages
+  function initTestimonialCarousel() {
+    const slider = document.getElementById('testimonial-slider');
+    const prevBtn = document.getElementById('prev-testimonial');
+    const nextBtn = document.getElementById('next-testimonial');
+    const cards = document.querySelectorAll('.testimonial-card');
+    const wrapper = document.querySelector('.testimonial-wrapper');
+    
+    if (!slider || !prevBtn || !nextBtn || !cards.length) return;
+
+    let currentIndex = 0;
+    let cardWidth = cards[0].offsetWidth + 40; // Largeur de carte + marge
+    let isAnimating = false;
+    
+    // Fonction pour calculer les dimensions selon la taille d'écran
+    function calculateDimensions() {
+      // Obtenir la largeur réelle de la carte avec ses marges
+      const cardStyle = getComputedStyle(cards[0]);
+      cardWidth = cards[0].offsetWidth + 
+                 parseInt(cardStyle.marginLeft) + 
+                 parseInt(cardStyle.marginRight);
+      
+      updateCarouselPosition();
+    }
+    
+    // Fonction pour mettre à jour la position du carrousel
+    function updateCarouselPosition() {
+      if (isAnimating) return;
+      isAnimating = true;
+      
+      let translateXValue;
+      
+      if (window.innerWidth <= 991) {
+        // Pour mobile: afficher une seule carte centrée
+        const wrapperWidth = wrapper.offsetWidth;
+        const offset = (wrapperWidth - cards[0].offsetWidth) / 2;
+        translateXValue = offset - (currentIndex * cardWidth);
+      } else {
+        // Pour desktop: défilement normal
+        translateXValue = -(currentIndex * cardWidth);
+      }
+      
+      slider.style.transform = `translateX(${translateXValue}px)`;
+      
+      // Mettre à jour les classes actives
+      cards.forEach((card, index) => {
+        card.classList.toggle('active', index === currentIndex);
+      });
+      
+      // Réinitialiser l'animation après un délai
+      setTimeout(() => {
+        isAnimating = false;
+      }, 600);
+    }
+    
+    // Calculer les dimensions initiales
+    setTimeout(calculateDimensions, 100);
+    
+    // Recalculer lors du redimensionnement
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(calculateDimensions, 250);
+    });
+    
+    // Navigation suivante
+    nextBtn.addEventListener('click', function() {
+      if (isAnimating) return;
+      currentIndex = (currentIndex + 1) % cards.length;
+      updateCarouselPosition();
+    });
+    
+    // Navigation précédente
+    prevBtn.addEventListener('click', function() {
+      if (isAnimating) return;
+      currentIndex = currentIndex === 0 ? cards.length - 1 : currentIndex - 1;
+      updateCarouselPosition();
+    });
+
+    // Auto-play du carrousel
+    let autoSlideInterval;
+    
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => {
+        if (isAnimating) return;
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCarouselPosition();
+      }, 5000);
+    }
+
+    // Démarrer l'auto-play
+    startAutoSlide();
+
+    // Arrêter l'auto-play au survol
+    const testimonialContainer = document.querySelector('.testimonial-container');
+    testimonialContainer.addEventListener('mouseenter', () => {
+      clearInterval(autoSlideInterval);
+    });
+
+    testimonialContainer.addEventListener('mouseleave', () => {
+      startAutoSlide();
+    });
+
+    // Support tactile pour mobile
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    slider.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      clearInterval(autoSlideInterval);
+    });
+
+    slider.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      currentX = e.touches[0].clientX;
+    });
+
+    slider.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const diffX = startX - currentX;
+      
+      if (Math.abs(diffX) > 50) {
+        if (diffX > 0 && !isAnimating) {
+          // Swipe left - next
+          currentIndex = (currentIndex + 1) % cards.length;
+        } else if (diffX < 0 && !isAnimating) {
+          // Swipe right - prev
+          currentIndex = currentIndex === 0 ? cards.length - 1 : currentIndex - 1;
+        }
+        updateCarouselPosition();
+      }
+      
+      startAutoSlide();
+    });
+  }
+
+  // Navigation fluide pour les ancres
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 100,
+          behavior: 'smooth'
+        });
+        
+        // Fermer le menu mobile si ouvert
+        if (sidebar.classList.contains('active')) {
+          menuBtn.classList.remove('active');
+          sidebar.classList.remove('active');
+          sidebarOverlay.classList.remove('active');
+        }
+      }
+    });
+  });
+
+  // Animation des icônes au survol
+  document.querySelectorAll('.fa-leaf, .fa-hand-holding-heart, .bi-alarm').forEach(icon => {
+    icon.addEventListener('mouseover', function() {
+      this.style.transform = 'scale(1.2) rotate(10deg)';
+      this.style.transition = 'transform 0.3s ease';
+    });
+    
+    icon.addEventListener('mouseout', function() {
+      this.style.transform = 'scale(1) rotate(0)';
+    });
+  });
+
+  // Effet de parallaxe pour les images de décoration
+  window.addEventListener('scroll', function() {
+    const scrollPosition = window.pageYOffset;
+    const decoration1 = document.querySelector('.decoration-1');
+    const decoration2 = document.querySelector('.decoration-2');
+    
+    if (decoration1) {
+      decoration1.style.transform = `rotate(45deg) translateY(${scrollPosition * 0.2}px)`;
+    }
+    
+    if (decoration2) {
+      decoration2.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+    }
+  });
+</script>
+</body>
+</html>

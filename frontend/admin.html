@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINA - Administration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B5A2B;
+            --primary-dark: #6b4420;
+            --accent: #d4a26a;
+            --secondary-color: #E3D5CA;
+            --dark-brown: #5A3E36;
+            --bg: #f3efe9;
+            --card-bg: #ffffff;
+            --text-main: #3d322c;
+            --text-muted: #8a7d73;
+            --border: #ece5dc;
+            --radius: 16px;
+            --shadow-sm: 0 1px 2px rgba(61,50,44,.05);
+            --shadow-md: 0 6px 24px rgba(61,50,44,.08);
+            --shadow-lg: 0 16px 48px rgba(61,50,44,.14);
+        }
+
+        * {
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: rgba(138, 90, 43, .2);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            letter-spacing: -.3px;
+        }
+
+        /* ===== PAGE DE CONNEXION ===== */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(900px 500px at 85% -10%, rgba(212,162,106,.35), transparent 60%),
+                radial-gradient(700px 500px at 0% 110%, rgba(138,90,43,.28), transparent 60%),
+                linear-gradient(150deg, #241b16 0%, #3b2b22 55%, #573f30 100%);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, .4);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+        }
+
+        .login-logo {
+            text-align: center;
+            padding: 36px 24px 28px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 55%, #a9783f 100%);
+            position: relative;
+        }
+
+        .login-logo::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(200px 80px at 85% 20%, rgba(255,255,255,.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .login-logo img {
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.25);
+            background: #fff;
+            padding: 6px;
+        }
+
+        .login-form {
+            padding: 32px;
+        }
+
+        .login-form .form-label {
+            font-weight: 600;
+            font-size: .85rem;
+            color: var(--text-main);
+        }
+
+        .login-form .input-group-text {
+            background: #f7f2ec;
+            border: 1px solid var(--border);
+            border-right: 0;
+            color: var(--primary-color);
+            border-radius: 12px 0 0 12px;
+        }
+
+        .login-form .form-control {
+            border: 1px solid var(--border);
+            border-left: 0;
+            padding: .7rem .9rem;
+            border-radius: 0 12px 12px 0;
+            font-size: .95rem;
+            background: #fff;
+        }
+
+        .login-form .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(212, 162, 106, .18);
+        }
+
+        /* ===== BOUTONS ===== */
+        .btn {
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all .18s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #a9783f 100%);
+            border: none;
+            padding: .7rem 1rem;
+            box-shadow: 0 6px 18px rgba(138, 90, 43, .25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(138, 90, 43, .35);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: #dcc9ae;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .btn-outline-secondary {
+            border-color: #e2d8cc;
+            color: #6f6157;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #f7f2ec;
+            border-color: #d8c8b4;
+            color: var(--text-main);
+        }
+
+        .btn-sm {
+            border-radius: 9px;
+        }
+
+        /* ===== BARRE DE NAVIGATION ===== */
+        .navbar.navbar-dark {
+            background: rgba(255, 255, 255, .85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            padding: 12px 16px;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .navbar-dark .navbar-brand img {
+            border-radius: 10px;
+            background: #fff;
+            padding: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.12);
+        }
+
+        .navbar-dark .navbar-text {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .navbar-dark .btn-outline-light {
+            color: var(--primary-color);
+            border-color: #dcc9ae;
+        }
+
+        .navbar-dark .btn-outline-light:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            background: linear-gradient(180deg, #241b16 0%, #3a2a20 100%);
+            color: #f0e9e0;
+            min-height: calc(100vh - 74px);
+            position: sticky;
+            top: 74px;
+            border-radius: 0 20px 20px 0;
+            margin: 8px 0;
+        }
+
+        .sidebar .nav-link {
+            color: #cbb8a6;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin: 6px 12px;
+            font-weight: 500;
+            font-size: .92rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all .18s ease;
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+            opacity: .9;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+        .sidebar .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #a9783f 100%);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(138, 90, 43, .4);
+        }
+
+        /* ===== CARTES ===== */
+        .card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            background: var(--card-bg);
+        }
+
+        .card-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            border-radius: var(--radius) var(--radius) 0 0 !important;
+            padding: 16px 20px;
+        }
+
+        .card-title {
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Cartes statistiques */
+        .border-left-primary, .border-left-success, .border-left-info, .border-left-warning {
+            position: relative;
+            overflow: hidden;
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+
+        .border-left-primary:hover, .border-left-success:hover,
+        .border-left-info:hover, .border-left-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .border-left-primary { border-left: 4px solid var(--primary-color); }
+        .border-left-success { border-left: 4px solid #2e9e6b; }
+        .border-left-info    { border-left: 4px solid #3d7fc4; }
+        .border-left-warning { border-left: 4px solid #d89a3a; }
+
+        .border-left-primary .col-auto i,
+        .border-left-success .col-auto i,
+        .border-left-info .col-auto i,
+        .border-left-warning .col-auto i {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff !important;
+            font-size: 1.4rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .14);
+        }
+
+        .border-left-primary .col-auto i { background: linear-gradient(135deg, #9c6b37, var(--primary-color)); }
+        .border-left-success .col-auto i { background: linear-gradient(135deg, #37b57e, #238e5c); }
+        .border-left-info .col-auto i    { background: linear-gradient(135deg, #4d92d4, #2f6bb3); }
+        .border-left-warning .col-auto i { background: linear-gradient(135deg, #e5aa4e, #cd8f2f); }
+
+        .text-xs { font-size: .72rem; letter-spacing: .4px; }
+        .text-gray-800 { color: var(--text-main) !important; }
+
+        h1.h2 {
+            font-weight: 800;
+        }
+
+        /* ===== TABLEAUX ===== */
+        .table {
+            --bs-table-hover-bg: #faf6f0;
+        }
+
+        .table thead th {
+            text-transform: uppercase;
+            font-size: .72rem;
+            letter-spacing: .5px;
+            color: var(--text-muted);
+            font-weight: 700;
+            border-bottom: 2px solid var(--border);
+            padding: 12px;
+            white-space: nowrap;
+        }
+
+        .table td {
+            vertical-align: middle;
+            padding: 14px 12px;
+            border-color: #f1ece4;
+        }
+
+        .table-hover tbody tr {
+            transition: background .15s ease;
+        }
+
+        .table-hover tbody tr:hover {
+            background: #faf6f0;
+        }
+
+        .table-dark {
+            --bs-table-bg: #3a2a20;
+            --bs-table-hover-bg: #46352a;
+            --bs-table-color: #fff;
+            --bs-table-border-color: rgba(255, 255, 255, .1);
+        }
+
+        /* ===== BADGES DE STATUT ===== */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: .75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .status-pending { background: #fdf1d7; color: #a46a12; }
+        .status-confirmed { background: #e2f0fb; color: #2a68a8; }
+        .status-shipped { background: #e8def9; color: #6a3bbf; }
+        .status-delivered { background: #d9f2e3; color: #1f8a55; }
+        .status-cancelled { background: #fbe3e3; color: #c0392b; }
+
+        /* ===== MENUS DÉROULANTS ===== */
+        .dropdown-menu {
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            padding: 8px;
+        }
+
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-weight: 500;
+            font-size: .85rem;
+        }
+
+        .dropdown-item:hover {
+            background: #faf6f0;
+        }
+
+        /* ===== INFOS CLIENT & MODAL ===== */
+        .customer-info {
+            background: #faf7f2;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .customer-info h5 {
+            font-weight: 700;
+            font-size: .95rem;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+
+        .customer-info p {
+            margin-bottom: 8px;
+            font-size: .9rem;
+        }
+
+        .order-items-table {
+            background-color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 24px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .badge.bg-primary {
+            background: linear-gradient(135deg, var(--primary-color), #a9783f) !important;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d8c8b4;
+            border-radius: 999px;
+            border: 2px solid var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        .admin-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Section Connexion -->
+    <div id="login-section" class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="/LOGO (2).png" alt="LUMINA" height="50" class="d-inline-block align-text-top">
+                <h4 class="text-white mt-2 mb-0">LUMINA - Administration</h4>
+            </div>
+            <div class="login-form">
+                <h5 class="text-center mb-4">Connexion Administrateur</h5>
+                <form id="login-form">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nom d'utilisateur</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mb-3" id="login-btn">
+                        <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                    </button>
+                    <div id="login-message" class="alert alert-danger d-none" role="alert"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Administration (cachée par défaut) -->
+    <div id="admin-section" class="admin-content">
+        <!-- Navigation -->
+        <nav class="navbar navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="/LOGO (2).png" alt="LUMINA" height="40" class="d-inline-block align-text-top">
+                    LUMINA - Administration
+                </a>
+                <div class="d-flex">
+                    <span class="navbar-text me-3">
+                        <i class="fas fa-user-circle me-1"></i> Administrateur
+                    </span>
+                    <button class="btn btn-outline-light btn-sm" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-1"></i> Déconnexion
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 col-lg-2 sidebar p-0">
+                    <div class="d-flex flex-column p-3">
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link active" onclick="showSection('dashboard')">
+                                    <i class="fas fa-tachometer-alt me-2"></i>
+                                    Tableau de bord
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" onclick="showSection('orders')">
+                                    <i class="fas fa-shopping-cart me-2"></i>
+                                    Commandes
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" onclick="showSection('customers')">
+                                    <i class="fas fa-users me-2"></i>
+                                    Clients
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Main content -->
+                <div class="col-md-9 col-lg-10 ms-sm-auto px-4 py-4">
+                    <!-- Dashboard Section -->
+                    <div id="dashboard-section">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 class="h2">Tableau de bord</h1>
+                            <button class="btn btn-primary" onclick="loadDashboard()">
+                                <i class="fas fa-sync-alt"></i> Actualiser
+                            </button>
+                        </div>
+
+                        <!-- Stats Cards -->
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    Commandes aujourd'hui</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="today-orders">0</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    Chiffre d'affaires (mois)</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="monthly-revenue">0 DH</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-info shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                    Commandes en attente</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="pending-orders">0</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    Total commandes</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-orders">0</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-chart-bar fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Orders -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Commandes récentes</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="recent-orders-table">
+                                        <thead>
+                                            <tr>
+                                                <th>N° Commande</th>
+                                                <th>Client</th>
+                                                <th>Date</th>
+                                                <th>Montant</th>
+                                                <th>Statut</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recent-orders-body">
+                                            <tr><td colspan="6" class="text-center">Connectez-vous pour voir les données</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orders Section -->
+                    <div id="orders-section" style="display: none;">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 class="h2">Gestion des commandes</h1>
+                            <button class="btn btn-primary" onclick="loadOrders()">
+                                <i class="fas fa-sync-alt"></i> Actualiser
+                            </button>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Toutes les commandes</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="orders-table">
+                                        <thead>
+                                            <tr>
+                                                <th>N° Commande</th>
+                                                <th>Client</th>
+                                                <th>Téléphone</th>
+                                                <th>Date</th>
+                                                <th>Montant</th>
+                                                <th>Statut</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="orders-body">
+                                            <tr><td colspan="7" class="text-center">Connectez-vous pour voir les données</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customers Section -->
+                    <div id="customers-section" style="display: none;">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 class="h2">Liste des clients</h1>
+                            <button class="btn btn-primary" onclick="loadCustomers()">
+                                <i class="fas fa-sync-alt"></i> Actualiser
+                            </button>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nom</th>
+                                                <th>Email</th>
+                                                <th>Téléphone</th>
+                                                <th>Adresse</th>
+                                                <th>Date inscription</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="customers-body">
+                                            <tr><td colspan="6" class="text-center">Connectez-vous pour voir les données</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Details Modal -->
+                    <div class="modal fade" id="orderDetailsModal" tabindex="-1">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Détails de la commande</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body" id="order-details-content">
+                                    <!-- Détails de la commande -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_BASE = window.location.origin;
+        let authToken = null;
+
+        // Gestion de la connexion
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('login-btn');
+            const messageDiv = document.getElementById('login-message');
+
+            // Réinitialiser le message
+            messageDiv.classList.add('d-none');
+            
+            // Désactiver le bouton pendant la requête
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Connexion...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.token) {
+                    authToken = result.token;
+                    localStorage.setItem('adminToken', authToken);
+                    showAdminPanel();
+                } else {
+                    throw new Error(result.error || 'Identifiants incorrects');
+                }
+            } catch (error) {
+                messageDiv.textContent = error.message || 'Erreur de connexion';
+                messageDiv.classList.remove('d-none');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Se connecter';
+            }
+        });
+
+        // Afficher le panneau d'administration
+        function showAdminPanel() {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('admin-section').classList.remove('admin-content');
+            document.getElementById('admin-section').style.display = 'block';
+            
+            // Charger les données initiales
+            loadDashboard();
+        }
+
+        // Déconnexion
+        function logout() {
+            authToken = null;
+            localStorage.removeItem('adminToken');
+            document.getElementById('admin-section').classList.add('admin-content');
+            document.getElementById('admin-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'flex';
+            document.getElementById('login-form').reset();
+        }
+
+        // Vérifier si déjà connecté au chargement
+        function checkAuth() {
+            const savedToken = localStorage.getItem('adminToken');
+            if (savedToken) {
+                authToken = savedToken;
+                showAdminPanel();
+            }
+        }
+
+        // Fonction pour les requêtes authentifiées
+        async function authFetch(url, options = {}) {
+            if (!authToken) {
+                throw new Error('Non authentifié');
+            }
+
+            const defaultOptions = {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                }
+            };
+
+            const response = await fetch(url, { ...defaultOptions, ...options });
+            
+            if (response.status === 401) {
+                logout();
+                throw new Error('Session expirée');
+            }
+
+            return response;
+        }
+
+        // Gestion des sections
+        function showSection(sectionName) {
+            document.querySelectorAll('[id$="-section"]').forEach(section => {
+                if (section.id !== 'dashboard-section' && 
+                    section.id !== 'orders-section' && 
+                    section.id !== 'customers-section') {
+                    return;
+                }
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionName + '-section').style.display = 'block';
+            
+            // Mettre à jour la navigation active
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Charger les données
+            if (sectionName === 'dashboard') {
+                loadDashboard();
+            } else if (sectionName === 'orders') {
+                loadOrders();
+            } else if (sectionName === 'customers') {
+                loadCustomers();
+            }
+        }
+
+        // Charger le tableau de bord
+        async function loadDashboard() {
+            try {
+                const response = await authFetch(`${API_BASE}/api/orders`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const orders = result.data;
+                    const today = new Date().toISOString().split('T')[0];
+                    
+                    // Statistiques
+                    const todayOrders = orders.filter(order => 
+                        order.order_date.startsWith(today)
+                    ).length;
+                    
+                    const pendingOrders = orders.filter(order => 
+                        order.status === 'pending'
+                    ).length;
+                    
+                    const monthlyRevenue = orders
+                        .filter(order => {
+                            const orderDate = new Date(order.order_date);
+                            const now = new Date();
+                            return orderDate.getMonth() === now.getMonth() && 
+                                   orderDate.getFullYear() === now.getFullYear();
+                        })
+                        .reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
+                    
+                    // Mise à jour UI
+                    document.getElementById('today-orders').textContent = todayOrders;
+                    document.getElementById('pending-orders').textContent = pendingOrders;
+                    document.getElementById('total-orders').textContent = orders.length;
+                    document.getElementById('monthly-revenue').textContent = monthlyRevenue.toFixed(2) + ' DH';
+                    
+                    // Commandes récentes
+                    const recentOrders = orders.slice(0, 5);
+                    displayOrders(recentOrders, 'recent-orders-body', true);
+                }
+            } catch (error) {
+                console.error('Erreur chargement dashboard:', error);
+                document.getElementById('recent-orders-body').innerHTML = 
+                    '<tr><td colspan="6" class="text-center text-danger">Erreur de chargement</td></tr>';
+            }
+        }
+
+        // Charger toutes les commandes
+        async function loadOrders() {
+            try {
+                const response = await authFetch(`${API_BASE}/api/orders`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayOrders(result.data, 'orders-body', false);
+                }
+            } catch (error) {
+                console.error('Erreur chargement commandes:', error);
+                document.getElementById('orders-body').innerHTML = 
+                    '<tr><td colspan="7" class="text-center text-danger">Erreur de chargement</td></tr>';
+            }
+        }
+
+        // Charger les clients
+        async function loadCustomers() {
+            try {
+                const response = await authFetch(`${API_BASE}/api/customers`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const container = document.getElementById('customers-body');
+                    
+                    if (result.data.length === 0) {
+                        container.innerHTML = '<tr><td colspan="6" class="text-center">Aucun client</td></tr>';
+                        return;
+                    }
+                    
+                    container.innerHTML = result.data.map(customer => `
+                        <tr>
+                            <td>${customer.id}</td>
+                            <td><strong>${customer.full_name}</strong></td>
+                            <td>${customer.email}</td>
+                            <td>${customer.phone}</td>
+                            <td>${customer.address}</td>
+                            <td>${new Date(customer.created_at).toLocaleDateString('fr-FR')}</td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Erreur chargement clients:', error);
+                document.getElementById('customers-body').innerHTML = 
+                    '<tr><td colspan="6" class="text-center text-danger">Erreur de chargement</td></tr>';
+            }
+        }
+
+        // Afficher les commandes
+        function displayOrders(orders, containerId, isRecentView) {
+            const container = document.getElementById(containerId);
+            
+            if (orders.length === 0) {
+                const colspan = isRecentView ? 6 : 7;
+                container.innerHTML = `<tr><td colspan="${colspan}" class="text-center">Aucune commande</td></tr>`;
+                return;
+            }
+            
+            container.innerHTML = orders.map(order => {
+                if (isRecentView) {
+                    return `
+                        <tr>
+                            <td><strong>${order.order_number}</strong></td>
+                            <td>
+                                <div><strong>${order.customer_name}</strong></div>
+                                <small class="text-muted">${order.customer_email}</small>
+                            </td>
+                            <td>${new Date(order.order_date).toLocaleDateString('fr-FR')}</td>
+                            <td><strong>${parseFloat(order.total_amount).toFixed(2)} DH</strong></td>
+                            <td>
+                                <span class="status-badge status-${order.status}">
+                                    ${getStatusText(order.status)}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewOrderDetails(${order.id})">
+                                    <i class="fas fa-eye"></i> Voir
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    return `
+                        <tr>
+                            <td><strong>${order.order_number}</strong></td>
+                            <td>
+                                <div><strong>${order.customer_name}</strong></div>
+                                <small class="text-muted">${order.customer_email}</small>
+                            </td>
+                            <td>${order.customer_phone}</td>
+                            <td>${new Date(order.order_date).toLocaleDateString('fr-FR')} ${new Date(order.order_date).toLocaleTimeString('fr-FR')}</td>
+                            <td><strong>${parseFloat(order.total_amount).toFixed(2)} DH</strong></td>
+                            <td>
+                                <span class="status-badge status-${order.status}">
+                                    ${getStatusText(order.status)}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewOrderDetails(${order.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                        Statut
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" onclick="updateOrderStatus(${order.id}, 'pending')">En attente</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="updateOrderStatus(${order.id}, 'confirmed')">Confirmée</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="updateOrderStatus(${order.id}, 'shipped')">Expédiée</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="updateOrderStatus(${order.id}, 'delivered')">Livrée</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="updateOrderStatus(${order.id}, 'cancelled')">Annulée</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+            }).join('');
+        }
+
+        // Voir les détails d'une commande
+        async function viewOrderDetails(orderId) {
+            try {
+                const response = await authFetch(`${API_BASE}/api/orders/${orderId}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const order = result.data;
+                    const items = order.items || [];
+                    
+                    const modalContent = `
+                        <div class="customer-info">
+                            <h5><i class="fas fa-user"></i> Informations Client</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Nom complet:</strong> ${order.customer_name}</p>
+                                    <p><strong>Email:</strong> ${order.customer_email}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Téléphone:</strong> ${order.customer_phone}</p>
+                                    <p><strong>Adresse:</strong> ${order.customer_address}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="customer-info">
+                            <h5><i class="fas fa-shopping-cart"></i> Informations Commande</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Numéro de commande:</strong> ${order.order_number}</p>
+                                    <p><strong>Date:</strong> ${new Date(order.order_date).toLocaleDateString('fr-FR')} à ${new Date(order.order_date).toLocaleTimeString('fr-FR')}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Statut:</strong> <span class="status-badge status-${order.status}">${getStatusText(order.status)}</span></p>
+                                    <p><strong>Montant total:</strong> <span style="font-size: 1.3em; color: var(--primary-color);">${parseFloat(order.total_amount).toFixed(2)} DH</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5><i class="fas fa-box"></i> Articles commandés</h5>
+                        <div class="table-responsive order-items-table">
+                            <table class="table table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th class="text-center">Prix unitaire</th>
+                                        <th class="text-center">Quantité</th>
+                                        <th class="text-end">Sous-total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${items.map(item => `
+                                        <tr>
+                                            <td>
+                                                <strong>${item.product_name}</strong>
+                                            </td>
+                                            <td class="text-center">${parseFloat(item.product_price).toFixed(2)} DH</td>
+                                            <td class="text-center">
+                                                <span class="badge bg-primary">${item.quantity}</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <strong>${parseFloat(item.subtotal).toFixed(2)} DH</strong>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                                <tfoot class="table-light">
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong style="font-size: 1.2em;">TOTAL:</strong></td>
+                                        <td class="text-end">
+                                            <strong style="font-size: 1.3em; color: var(--primary-color);">
+                                                ${parseFloat(order.total_amount).toFixed(2)} DH
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    `;
+                    
+                    document.getElementById('order-details-content').innerHTML = modalContent;
+                    new bootstrap.Modal(document.getElementById('orderDetailsModal')).show();
+                } else {
+                    alert('Erreur: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Erreur détails commande:', error);
+                alert('Erreur lors du chargement des détails');
+            }
+        }
+
+        // Mettre à jour le statut
+        async function updateOrderStatus(orderId, status) {
+            if (!confirm('Confirmer le changement de statut ?')) {
+                return;
+            }
+            
+            try {
+                const response = await authFetch(`${API_BASE}/api/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Statut mis à jour avec succès');
+                    loadOrders();
+                    if (document.getElementById('dashboard-section').style.display !== 'none') {
+                        loadDashboard();
+                    }
+                } else {
+                    alert('Erreur: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Erreur mise à jour statut:', error);
+                alert('Erreur lors de la mise à jour');
+            }
+        }
+
+        // Texte du statut
+        function getStatusText(status) {
+            const statusTexts = {
+                'pending': 'En attente',
+                'confirmed': 'Confirmée',
+                'shipped': 'Expédiée',
+                'delivered': 'Livrée',
+                'cancelled': 'Annulée'
+            };
+            return statusTexts[status] || status;
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page admin chargée');
+            checkAuth();
+        });
+    </script>
+</body>
+</html>
